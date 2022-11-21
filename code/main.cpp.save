@@ -1,0 +1,99 @@
+#include "../include/descent.h"
+
+//-----------------------------------------------------------------------------
+
+int main ()
+{
+    File *File_input = file_reader (Asm->Info.file_in);
+    Line *Text = lines_separator (File_input);
+    
+    get_g (Text[0]);
+    
+    return 0;
+}
+
+//-----------------------------------------------------------------------------
+
+int get_t ()
+{
+    int val1 = get_n ();
+    
+    while(*str == '*' || *str == '/')
+    {
+        char *op = str;
+        str++;
+        
+        int val2 = get_n ();
+        
+        if(*op == '*') 
+        {
+            val1 *= val2;
+        }
+        
+        else
+        {
+            val1 /= val2;
+        }
+    }
+    
+    return val1;
+}
+
+//-----------------------------------------------------------------------------
+
+int get_p ()
+{
+    int val = 0;
+    
+    if(*str == '(')
+    {
+        str++;
+        val = get_e ();
+        
+        assert ();
+    }
+}
+
+//-----------------------------------------------------------------------------
+
+int get_e ()
+{
+    int val1 = get_t ();
+    
+    while(*str == '+' || *str == '-')
+    {
+        char *op = str;
+        str++;
+        
+        int val2 = get_n ();
+        
+        if(*op == '+') 
+        {
+            val1 += val2;
+        }
+        
+        else
+        {
+            val1 -= val2;
+        }
+    }
+    
+    return val1;
+}
+
+//-----------------------------------------------------------------------------
+
+int get_g (const char *s)
+{
+    str = s;
+    
+    int val = get_e ();
+    
+    assert (*str == '\0');
+    
+    return val;
+}
+
+//-----------------------------------------------------------------------------
+
+
